@@ -47,8 +47,11 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	response := map[string]string{"token": token}
-	ctx.JSON(http.StatusOK, response)
+	userDTO := model.UserDTO{
+		Id:       int(user.ID),
+		Username: user.Username,
+	}
+	ctx.JSON(http.StatusOK, gin.H{"token": token, "user": userDTO})
 }
 
 func (h *AuthHandler) Register(ctx *gin.Context) {

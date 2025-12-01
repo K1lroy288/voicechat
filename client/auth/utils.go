@@ -62,6 +62,8 @@ func authApi(username, password string, register bool) (*model.ServerResponse, e
 		return nil, fmt.Errorf("register response decode error: %w", err)
 	}
 
+	serverResponse.HttpCode = resp.StatusCode
+
 	return &serverResponse, nil
 }
 

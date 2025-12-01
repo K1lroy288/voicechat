@@ -9,7 +9,7 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func RegisterWindow(w fyne.Window) fyne.CanvasObject {
+func registerWindow(w fyne.Window) fyne.CanvasObject {
 	w.SetTitle("Registration")
 	w.Resize(fyne.NewSize(300, 400))
 
@@ -41,7 +41,7 @@ func RegisterWindow(w fyne.Window) fyne.CanvasObject {
 		}
 
 		resp, err := authApi(loginField.Text, passwordCheckField.Text, true)
-		if err != nil || resp.HttpCode != 200 {
+		if err != nil || resp.HttpCode != 201 {
 			log.Println(err)
 			dialog := customErrorMsg("Try later", w)
 			dialog.Show()

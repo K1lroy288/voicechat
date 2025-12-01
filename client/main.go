@@ -1,14 +1,15 @@
 package main
 
 import (
+	"voiceChatClient/auth"
+
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/widget"
 )
 
 func main() {
 	a := app.New()
 	w := a.NewWindow("VoiceChat")
 
-	w.SetContent(widget.NewLabel("hi"))
+	w.SetContent(auth.LoginWindow(w))
 	w.ShowAndRun()
 }
