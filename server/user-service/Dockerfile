@@ -1,6 +1,6 @@
 FROM golang:alpine AS builder
 
-WORKDIR /auth-service
+WORKDIR /user-service
 
 COPY go.mod go.sum ./
 
@@ -8,16 +8,16 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o /auth-service
+RUN CGO_ENABLED=0 GOOS=linux go build -o /user-service
 
 FROM alpine:latest
 
 WORKDIR /root/
 
-COPY --from=builder /auth-service/auth-service .
+COPY --from=builder /user-service/user-service .
 
 COPY .env .
 
 EXPOSE 8000
 
-CMD ["./auth-service"]
+CMD ["./user-service"]

@@ -1,15 +1,17 @@
 package utils
 
 import (
-	"auth-service/model"
 	"fmt"
 	"time"
+	"user-service/config"
+	"user-service/model"
 
 	"github.com/golang-jwt/jwt"
 )
 
 func GenerateJWT(user model.User) (string, error) {
-	jwtKey := []byte("distrurlserv")
+	cfg := config.GetConfig()
+	jwtKey := []byte(cfg.JwtSecret)
 	claims := jwt.MapClaims{
 		"user_id":  user.ID,
 		"username": user.Username,

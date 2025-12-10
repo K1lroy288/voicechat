@@ -2,6 +2,7 @@ package auth
 
 import (
 	"log"
+	"net/http"
 	"strings"
 
 	"fyne.io/fyne/v2"
@@ -41,7 +42,7 @@ func registerWindow(w fyne.Window) fyne.CanvasObject {
 		}
 
 		resp, err := authApi(loginField.Text, passwordCheckField.Text, true)
-		if err != nil || resp.HttpCode != 201 {
+		if err != nil || resp.HttpCode != http.StatusCreated {
 			log.Println(err)
 			dialog := customErrorMsg("Try later", w)
 			dialog.Show()

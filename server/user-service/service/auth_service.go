@@ -1,8 +1,8 @@
 package service
 
 import (
-	"auth-service/model"
-	"auth-service/repository"
+	"user-service/model"
+	"user-service/repository"
 )
 
 type AuthService struct {

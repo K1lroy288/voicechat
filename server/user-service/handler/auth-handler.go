@@ -1,11 +1,11 @@
 package handler
 
 import (
-	"auth-service/model"
-	"auth-service/service"
-	"auth-service/utils"
 	"log"
 	"net/http"
+	"user-service/model"
+	"user-service/service"
+	"user-service/utils"
 
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"

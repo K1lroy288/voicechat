@@ -1,13 +1,13 @@
 package main
 
 import (
-	"auth-service/config"
-	"auth-service/handler"
-	"auth-service/model"
-	"auth-service/repository"
-	"auth-service/service"
 	"fmt"
 	"net/http"
+	"user-service/config"
+	"user-service/handler"
+	"user-service/model"
+	"user-service/repository"
+	"user-service/service"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	cfg := config.LoadConfig()
+	cfg := config.GetConfig()
 
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable",
 		cfg.DB.Host, cfg.DB.User, cfg.DB.Password, cfg.DB.Name, cfg.DB.Port)
@@ -33,10 +33,10 @@ func main() {
 
 	r := gin.Default()
 
-	api := r.Group("/auth")
+	api := r.Group("/user")
 	{
 		api.GET("/health", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "Auth service is up!")
+			ctx.String(http.StatusOK, "User service is up!")
 		})
 
 		api.POST("/login", handler.Login)
