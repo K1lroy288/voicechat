@@ -49,6 +49,8 @@ func registerWindow(w fyne.Window) fyne.CanvasObject {
 			return
 		}
 
+		log.Printf(resp.Error)
+
 		w.SetContent(LoginWindow(w))
 	})
 

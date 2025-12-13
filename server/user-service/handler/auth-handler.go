@@ -55,6 +55,7 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 }
 
 func (h *AuthHandler) Register(ctx *gin.Context) {
+	//h.createTestUser()
 	var req model.UserDTO
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		log.Printf("Invalid JSON at register request: %v", err)
@@ -87,3 +88,22 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 
 	ctx.Status(http.StatusCreated)
 }
+
+/* func (h *AuthHandler) createTestUser() {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("1"), bcrypt.DefaultCost)
+	if err != nil {
+		log.Printf("Hashed password generation failed: %v", err)
+		return
+	}
+
+	user := model.User{
+		Username:     "1",
+		Userpassword: hashedPassword,
+	}
+
+	_, err = h.service.Register(&user)
+	if err != nil {
+		log.Printf("Exist user check failed: %v", err)
+		return
+	}
+} */

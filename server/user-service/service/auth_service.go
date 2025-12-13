@@ -14,9 +14,9 @@ func NewAuthService(repo *repository.UserRepository) *AuthService {
 }
 
 func (s *AuthService) Login(username string) (model.User, error) {
-	return s.repo.Login(username)
+	return s.repo.GetUserByUsername(username)
 }
 
 func (s *AuthService) Register(user *model.User) (bool, error) {
-	return s.repo.Register(user)
+	return s.repo.CreateUser(user)
 }

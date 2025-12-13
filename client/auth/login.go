@@ -4,6 +4,7 @@ import (
 	"log"
 	"strings"
 	"voiceChatClient/config"
+	mainwindow "voiceChatClient/main_window"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
@@ -22,6 +23,10 @@ func LoginWindow(w fyne.Window) fyne.CanvasObject {
 			return
 		}
 
+		log.Println(loginField.Text, "-", passwordField.Text, "-")
+
+		_, _ = authApi("1", "1", true)
+
 		resp, err := authApi(loginField.Text, passwordField.Text, false)
 		if (err != nil) || ((resp.HttpCode != 200) && (resp.HttpCode != 500)) {
 			log.Println(err)
@@ -29,6 +34,8 @@ func LoginWindow(w fyne.Window) fyne.CanvasObject {
 			dialog.Show()
 			return
 		}
+
+		log.Println(resp.Error)
 
 		if resp.HttpCode == 500 {
 			log.Println(err)
@@ -40,7 +47,7 @@ func LoginWindow(w fyne.Window) fyne.CanvasObject {
 		config.UserData.Token = resp.Token
 		config.UserData.Username = resp.User.Username
 		config.UserData.UserId = resp.User.Id
-		w.SetContent(widget.NewLabel("main window"))
+		w.SetContent(mainwindow.VoiceChatMainWindow(w))
 	})
 
 	registerButton := widget.NewButton("Register", func() {

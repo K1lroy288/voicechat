@@ -34,12 +34,12 @@ func authApi(username, password string, register bool) (*model.ServerResponse, e
 
 	jsonData, err := json.Marshal(user)
 	if err != nil {
-		return nil, fmt.Errorf("register JSON marshal error: %w", err)
+		return nil, fmt.Errorf("auth JSON marshal error: %w", err)
 	}
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
-		return nil, fmt.Errorf("register request create error: %w", err)
+		return nil, fmt.Errorf("auth request create error: %w", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
@@ -48,18 +48,18 @@ func authApi(username, password string, register bool) (*model.ServerResponse, e
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return nil, fmt.Errorf("register request send error: %w", err)
+		return nil, fmt.Errorf("auth request send error: %w", err)
 	}
 	defer resp.Body.Close()
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return nil, fmt.Errorf("register response read error: %w", err)
+		return nil, fmt.Errorf("auth response read error: %w", err)
 	}
 
 	var serverResponse model.ServerResponse
 	if err := json.Unmarshal(body, &serverResponse); err != nil {
-		return nil, fmt.Errorf("register response decode error: %w", err)
+		return nil, fmt.Errorf("auth response decode error: %w", err)
 	}
 
 	serverResponse.HttpCode = resp.StatusCode

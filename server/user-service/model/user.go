@@ -12,4 +12,5 @@ type User struct {
 	gorm.Model
 	Username     string `gorm:"unique"`
 	Userpassword []byte
+	Friends      []User `gorm:"many2many:friends;"`
 }

@@ -33,16 +33,16 @@ func main() {
 
 	r := gin.Default()
 
-	api := r.Group("/user")
+	api := r.Group("/auth")
 	{
-		api.GET("/health", func(ctx *gin.Context) {
-			ctx.String(http.StatusOK, "User service is up!")
-		})
-
 		api.POST("/login", handler.Login)
 
 		api.POST("/register", handler.Register)
 	}
+
+	r.GET("/health", func(ctx *gin.Context) {
+		ctx.String(http.StatusOK, "User service is up!")
+	})
 
 	addr := fmt.Sprintf(":%s", cfg.Port)
 	r.Run(addr)
