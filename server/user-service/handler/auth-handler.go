@@ -27,7 +27,7 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	user, err := h.service.Login(req.Username)
+	user, err := h.service.GetUserByUsername(req.Username)
 	if err != nil {
 		log.Printf("Invalid username or password: %v", err)
 		ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid username or password"})
@@ -55,7 +55,6 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 }
 
 func (h *AuthHandler) Register(ctx *gin.Context) {
-	//h.createTestUser()
 	var req model.UserDTO
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		log.Printf("Invalid JSON at register request: %v", err)
@@ -74,7 +73,7 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 		Username:     req.Username,
 		Userpassword: hashedPassword,
 	}
-	exist, err := h.service.Register(&user)
+	exist, err := h.service.CreateUser(&user)
 	if err != nil {
 		log.Printf("Exist user check failed: %v", err)
 		ctx.JSON(http.StatusInternalServerError, gin.H{"error": "Registration failed"})
@@ -88,22 +87,3 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 
 	ctx.Status(http.StatusCreated)
 }
-
-/* func (h *AuthHandler) createTestUser() {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("1"), bcrypt.DefaultCost)
-	if err != nil {
-		log.Printf("Hashed password generation failed: %v", err)
-		return
-	}
-
-	user := model.User{
-		Username:     "1",
-		Userpassword: hashedPassword,
-	}
-
-	_, err = h.service.Register(&user)
-	if err != nil {
-		log.Printf("Exist user check failed: %v", err)
-		return
-	}
-} */

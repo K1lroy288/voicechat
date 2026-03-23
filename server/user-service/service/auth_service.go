@@ -13,10 +13,10 @@ func NewAuthService(repo *repository.UserRepository) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-func (s *AuthService) Login(username string) (model.User, error) {
+func (s *AuthService) GetUserByUsername(username string) (model.User, error) {
 	return s.repo.GetUserByUsername(username)
 }
 
-func (s *AuthService) Register(user *model.User) (bool, error) {
+func (s *AuthService) CreateUser(user *model.User) (bool, error) {
 	return s.repo.CreateUser(user)
 }

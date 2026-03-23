@@ -28,16 +28,16 @@ func main() {
 	db.AutoMigrate(&model.User{})
 
 	repo := repository.NewUserRepository(db)
-	service := service.NewAuthService(repo)
-	handler := handler.NewAuthHandler(service)
+	authService := service.NewAuthService(repo)
+	authHandler := handler.NewAuthHandler(authService)
 
 	r := gin.Default()
 
 	api := r.Group("/auth")
 	{
-		api.POST("/login", handler.Login)
+		api.POST("/login", authHandler.Login)
 
-		api.POST("/register", handler.Register)
+		api.POST("/register", authHandler.Register)
 	}
 
 	r.GET("/health", func(ctx *gin.Context) {
